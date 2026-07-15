@@ -1,28 +1,21 @@
 const { chromium } = require("playwright");
 
 (async () => {
-
-  const browser = await chromium.launch({
-    headless: true
-  });
+  const browser = await chromium.launch({ headless: true });
 
   const page = await browser.newPage();
 
   await page.goto(
     "https://www.goindigo.in/careers/hiringevents/inflightservicesevents.html",
     {
-      waitUntil: "domcontentloaded",
+      waitUntil: "networkidle",
       timeout: 60000
     }
   );
 
-  // Wait for JavaScript-rendered content
-  await page.waitForTimeout(8000);
+  await page.screenshot({ path: "indigo.png", fullPage: true });
 
-  const text = await page.locator("body").innerText();
-
-  console.log(text);
+  console.log(await page.content());
 
   await browser.close();
-
 })();
