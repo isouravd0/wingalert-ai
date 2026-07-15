@@ -26,3 +26,8 @@ jobs:
       - run: npx playwright install chromium
 
       - run: node index.js
+
+      - uses: actions/upload-artifact@v4
+        with:
+            name: indigo-page
+            path: indigo.png
