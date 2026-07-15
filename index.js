@@ -11,16 +11,17 @@ const { chromium } = require("playwright");
   await page.goto(
     "https://www.goindigo.in/careers/hiringevents/inflightservicesevents.html",
     {
-      waitUntil: "networkidle",
+      waitUntil: "domcontentloaded",
       timeout: 60000
     }
   );
 
-  console.log("Title:");
-  console.log(await page.title());
+  // Wait for JavaScript-rendered content
+  await page.waitForTimeout(8000);
 
-  console.log("URL:");
-  console.log(page.url());
+  const text = await page.locator("body").innerText();
+
+  console.log(text);
 
   await browser.close();
 
